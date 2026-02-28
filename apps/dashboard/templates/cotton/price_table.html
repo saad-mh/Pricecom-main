@@ -1,0 +1,102 @@
+<div class="terminal-panel flex flex-col h-full bg-[#05080c]">
+    <div class="p-3 border-b border-brand-border flex items-center justify-between bg-[#0a0d14]">
+        <h2 class="text-sm font-bold text-brand-textHighlight flex items-center font-mono uppercase tracking-widest">
+            <span class="text-brand-accent mr-2">::</span> MARKET_COMPARISON_MATRIX
+        </h2>
+        <div class="font-mono text-[10px] text-brand-textMuted flex items-center">
+            <span class="h-1.5 w-1.5 bg-brand-success mr-2 animate-pulse"></span>
+            SYNC_ACTIVE
+        </div>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-[800px] font-mono whitespace-nowrap">
+            <thead>
+                <tr
+                    class="bg-[#080B0F] text-[10px] text-brand-textMuted uppercase tracking-wider border-b border-brand-border">
+                    <th class="px-4 py-2 font-normal">ASSET_ID</th>
+                    <th class="px-4 py-2 font-normal">NODE_AMZ</th>
+                    <th class="px-4 py-2 font-normal">NODE_FLIP</th>
+                    <th class="px-4 py-2 font-normal">MIN_VAL</th>
+                    <th class="px-4 py-2 font-normal">DELTA</th>
+                    <th class="px-4 py-2 text-right font-normal">EXEC</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-brand-border text-xs">
+                <!-- iPhone 14 -->
+                <tr class="hover:bg-[#0a111a] transition-none group">
+                    <td class="px-4 py-3">
+                        <div class="flex items-center space-x-3">
+                            <div>
+                                <p class="text-brand-textHighlight group-hover:text-brand-accent">IPHONE-14-128-BLK</p>
+                                <p class="text-[9px] text-brand-textMuted mt-0.5"><span
+                                        class="text-brand-success">LIVE</span> // 12ms</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 tabular-nums text-brand-textMuted">₹62,999</td>
+                    <td class="px-4 py-3 tabular-nums text-brand-textMuted">₹61,499</td>
+                    <td class="px-4 py-3 tabular-nums"><span class="font-bold text-brand-success">₹61,499</span></td>
+                    <td class="px-4 py-3">
+                        <span
+                            class="text-[10px] text-brand-danger bg-brand-danger/10 px-1 border border-brand-danger/20">DROP_1.5K</span>
+                    </td>
+                    <td class="px-4 py-3 text-right">
+                        <button
+                            class="bg-transparent text-brand-accent border border-brand-accent px-3 py-1 text-[10px] uppercase tracking-widest hover:bg-brand-accent hover:text-[#080B0F] transition-none">
+                            ACQUIRE
+                        </button>
+                    </td>
+                </tr>
+                <!-- MacBook Air M2 -->
+                <tr class="hover:bg-[#0a111a] transition-none group">
+                    <td class="px-4 py-3">
+                        <div class="flex items-center space-x-3">
+                            <div>
+                                <p class="text-brand-textHighlight group-hover:text-brand-accent">MACBOOK-AIR-M2-256</p>
+                                <p class="text-[9px] text-brand-textMuted mt-0.5">T-300s</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 tabular-nums text-brand-textMuted">₹89,900</td>
+                    <td class="px-4 py-3 tabular-nums text-brand-textMuted">₹88,990</td>
+                    <td class="px-4 py-3 tabular-nums"><span class="font-bold text-brand-success">₹88,990</span></td>
+                    <td class="px-4 py-3">
+                        <span
+                            class="text-[10px] text-brand-textMuted bg-[#0D1117] px-1 border border-brand-border">STABLE_00</span>
+                    </td>
+                    <td class="px-4 py-3 text-right">
+                        <button
+                            class="bg-transparent text-brand-textMuted border border-brand-border px-3 py-1 text-[10px] uppercase tracking-widest hover:border-brand-textHighlight hover:text-brand-textHighlight transition-none">
+                            ACQUIRE
+                        </button>
+                    </td>
+                </tr>
+                <!-- Samsung S23 -->
+                <tr class="hover:bg-[#0a111a] transition-none group">
+                    <td class="px-4 py-3">
+                        <div class="flex items-center space-x-3">
+                            <div>
+                                <p class="text-brand-textHighlight group-hover:text-brand-accent">SAMSUNG-S23-256</p>
+                                <p class="text-[9px] text-brand-textMuted mt-0.5">T-3600s</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 tabular-nums text-brand-textMuted">₹64,999</td>
+                    <td class="px-4 py-3 tabular-nums text-brand-textMuted">₹65,999</td>
+                    <td class="px-4 py-3 tabular-nums"><span class="font-bold text-brand-amber">₹64,999</span></td>
+                    <td class="px-4 py-3">
+                        <span
+                            class="text-[10px] text-brand-amber bg-brand-amber/10 px-1 border border-brand-amber/20">RISE_1.0K</span>
+                    </td>
+                    <td class="px-4 py-3 text-right">
+                        <button
+                            class="bg-transparent text-brand-textMuted border border-brand-border px-3 py-1 text-[10px] uppercase tracking-widest hover:border-brand-textHighlight hover:text-brand-textHighlight transition-none">
+                            ACQUIRE
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

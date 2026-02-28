@@ -1,0 +1,48 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% block title %}TERMINAL | PRICECOM{% endblock %}
+
+{% block content %}
+<div class="flex flex-col space-y-0 border border-brand-border bg-brand-border gap-[1px]">
+
+    <!-- Top Summary Cards row -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-[1px]">
+        <c-stat_card title="Products Tracked" value="8,421" sublabel="+312 this week" />
+        <c-stat_card title="Price Drop Today" value="284" sublabel="products | -12.4% market shift" />
+        <c-stat_card title="Avg Market Change" value="+2.1%" sublabel="across 47 stores" />
+        <c-stat_card title="Active Alerts" value="12" sublabel="3 critical, 9 standard" />
+        <c-stat_card title="Data Freshness" value="LIVE" sublabel="12ms latency" type="freshness" />
+    </div>
+
+    <!-- Main Workspace Split -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-[1px]">
+
+        <!-- Left Analysis Area -->
+        <div class="lg:col-span-9 flex flex-col gap-[1px]">
+            <!-- Chart Panel -->
+            <div class="w-full">
+                <c-price_chart />
+            </div>
+            <!-- Data Grid -->
+            <div class="w-full">
+                <c-price_table />
+            </div>
+        </div>
+
+        <!-- Right Intelligence & Action Area -->
+        <!-- Glowing vertical divider effect handled by the grid gap bg-brand-border but we could explicitly style border -->
+        <div class="lg:col-span-3 flex flex-col gap-[1px] relative">
+            <div
+                class="absolute -left-[1px] top-0 bottom-0 w-[1px] bg-brand-accent/20 shadow-[0_0_10px_#00e5ff] z-10 pointer-events-none hidden lg:block">
+            </div>
+
+            <c-prediction_panel />
+            <c-watchlist_panel />
+
+            <c-system_health />
+            <c-ocr_panel />
+        </div>
+
+    </div>
+</div>
+{% endblock %}
