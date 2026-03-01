@@ -1,0 +1,22 @@
+{% if query %}
+<div class="border border-[#00ff9d]/30 bg-[#00ff9d]/5 p-4 flex flex-col text-[#00ff9d] font-mono text-sm relative">
+    <div class="flex items-center mb-4">
+        <i class="fas fa-microchip mr-4 animate-spin-slow"></i>
+        <span>QUERY_RETURNED_FOR: <span class="font-bold border-b border-[#00ff9d]/50 pb-0.5">{{ query }}</span></span>
+        <span class="blinking-cursor ml-2"></span>
+    </div>
+
+    <div class="space-y-2 mt-2 border-t border-[#00ff9d]/20 pt-4 text-xs">
+        <div
+            class="flex justify-between hover:bg-[#00ff9d]/10 p-2 cursor-pointer transition-none border border-transparent hover:border-[#00ff9d]/40">
+            <span class="text-[#e2e8f0]">MATCH_FOUND :: {{ query }}</span>
+            <span class="text-brand-textMuted tracking-widest">RANK_01</span>
+        </div>
+        <div
+            class="flex justify-between hover:bg-[#00ff9d]/10 p-2 cursor-pointer transition-none border border-transparent hover:border-[#00ff9d]/40">
+            <span class="text-[#e2e8f0]">ALT_MATCH :: {{ query }} SIMILAR</span>
+            <span class="text-brand-textMuted tracking-widest">RANK_02</span>
+        </div>
+    </div>
+</div>
+{% endif %}

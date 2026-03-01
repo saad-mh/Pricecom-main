@@ -138,6 +138,14 @@
 
 <body x-data="pricecomStore" class="antialiased h-screen overflow-hidden flex bg-brand-base text-sm">
 
+    <!-- HTMX Global Error Banner -->
+    <div id="global-error"
+        class="fixed top-0 inset-x-0 bg-[#ff3366] text-[#080B0F] font-mono text-center py-2 text-xs font-bold tracking-widest z-[9999]"
+        x-data="{ show: false }" x-show="show" x-transition.opacity
+        @htmx:response-error.window="show = true; setTimeout(() => show = false, 5000)" style="display: none;">
+        <i class="fas fa-exclamation-triangle mr-2"></i> CRITICAL_ERROR: BACKEND_CONNECTION_FAILED
+    </div>
+
     <div class="scanline"></div>
 
     <!-- Mobile Sidebar Overlay -->
@@ -171,7 +179,9 @@
             <a href="#"
                 class="flex items-center space-x-3 px-4 py-2 text-brand-textMuted hover:text-brand-textHighlight hover:bg-[#0a111a] border-l-2 border-transparent transition-none">
                 <span class="w-4 text-center">></span>
-                <span>Watchlist</span>
+                <span>Watchlist <span x-show="$store.pricecomStore.watchlistCount > 0"
+                        x-text="'(' + $store.pricecomStore.watchlistCount + ')'"
+                        class="text-[#00e5ff] text-[10px] ml-1"></span></span>
             </a>
             <a href="#"
                 class="flex items-center space-x-3 px-4 py-2 text-brand-textMuted hover:text-brand-textHighlight hover:bg-[#0a111a] border-l-2 border-transparent transition-none">
@@ -183,8 +193,10 @@
         <!-- Sidebar Footer / System Status -->
         <div class="p-4 border-t border-brand-border">
             <div class="flex items-center space-x-2 text-[10px] text-brand-textMuted font-mono">
-                <div class="h-1.5 w-1.5 bg-brand-success rounded-none animate-pulse"></div>
-                <span class="tracking-widest uppercase">CORE SYSTEM ONLINE</span>
+                <div class="h-1.5 w-1.5 bg-brand-success rounded-none animate-pulse"
+                    :class="{'bg-[#ff3366]': $store.pricecomStore.systemError }"></div>
+                <span class="tracking-widest uppercase"
+                    x-text="$store.pricecomStore.systemError ? 'SYSTEM_FAULT' : 'CORE SYSTEM ONLINE'"></span>
             </div>
         </div>
     </aside>
@@ -213,7 +225,7 @@
             <div class="flex items-center space-x-6 font-mono text-xs">
                 <div class="flex items-center space-x-2 text-brand-amber">
                     <i class="fas fa-exclamation-triangle"></i>
-                    <span>ALERTS: 3/9</span>
+                    <span>ALERTS: <span x-text="$store.pricecomStore.activeAlerts"></span></span>
                 </div>
 
                 <div class="h-4 w-px bg-brand-border hidden sm:block"></div>
@@ -227,7 +239,7 @@
         </header>
 
         <!-- Main Dashboard Canvas -->
-        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-brand-base p-4 lg:p-6 pb-20">
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-brand-base p-4 lg:p-6 pb-20 scroll-smooth">
             <div class="max-w-[1600px] mx-auto">
                 {% block content %}{% endblock %}
             </div>
@@ -237,10 +249,41 @@
     <!-- Alpine Global Store Initialization -->
     <script>
         document.addEventListener('alpine:init', () => {
-            Alpine.data('pricecomStore', () => ({
+            Alpine.store('pricecomStore', {
                 isSidebarOpen: false,
-                init() { }
-            }));
+                activeAlerts: {{ active_alerts|default:"0" }},
+            selectedProductId: null,
+            predictionSignal: '{{ prediction.signal|default:""|escapejs }}',
+            systemError: false,
+            watchlistCount: 0
+            });
+
+        Alpine.data('pricecomStore', () => ({
+            isSidebarOpen: false,
+            init() {
+                // Sync local state to store to let sidebar handle it if needed
+                this.$watch('$store.pricecomStore.isSidebarOpen', val => this.isSidebarOpen = val);
+                this.$watch('isSidebarOpen', val => this.$store.pricecomStore.isSidebarOpen = val);
+
+                window.addEventListener('htmx:responseError', () => {
+                    this.$store.pricecomStore.systemError = true;
+                });
+            }
+        }));
+
+        // Watchlist update listener
+        window.addEventListener('update-watchlist-count', (e) => {
+            Alpine.store('pricecomStore').watchlistCount = e.detail;
+        });
+        });
+
+        // Custom HTMX configurations
+        document.body.addEventListener('htmx:configRequest', function (evt) {
+            // Add CSRF to HTMX POST requests manually if not within form
+            var csrf = document.querySelector('[name=csrfmiddlewaretoken]');
+            if (csrf && evt.detail.verb !== 'get') {
+                evt.detail.headers['X-CSRFToken'] = csrf.value;
+            }
         });
     </script>
 </body>
