@@ -466,7 +466,6 @@ def api_search(request):
             if is_htmx:
                 return HttpResponse(
                     f'<tr><td colspan="6" class="px-4 py-4 text-center text-[#ff99b5]">{error_msg}</td></tr>',
-                    status=502,
                 )
             return render(
                 request,

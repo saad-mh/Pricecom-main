@@ -7,6 +7,7 @@ from django.conf import settings
 import json
 from urllib.parse import urlparse
 import os
+from typing import Optional
 from apps.scraper.services.services import ScraperService
 from apps.scraper.models import Product, PriceAlert
 from apps.scraper.services.smtp_handler import send_monitored_email
@@ -57,7 +58,7 @@ def celery_ping(self):
 
 
 @shared_task(bind=True)
-def image_search_task(self, temp_path: str, ocr_text: str | None = None, frontend_task_id: str | None = None):
+def image_search_task(self, temp_path: str, ocr_text: Optional[str] = None, frontend_task_id: Optional[str] = None):
     """Run a search+scrape for OCR text (or filename) and cache results under frontend task id in Redis."""
     query = ocr_text or os.path.basename(temp_path)
     try:

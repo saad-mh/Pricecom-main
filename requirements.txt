@@ -12,3 +12,11 @@ fake-useragent
 django-allauth
 cryptography
 serpapi
+
+##
+celery
+django_cotton
+pytz
+bs4
+redis
+numpy

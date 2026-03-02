@@ -1,4 +1,5 @@
 import logging
+import os
 import random
 import time
 import re
@@ -32,13 +33,13 @@ class ScraperService:
 
     def __init__(self) -> None:
         # last_error is used by callers to understand why scraping returned no results
-        self.last_error: str | None = None
+        self.last_error: Optional[str] = None
 
     def search_all(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
         # Use SerpAPI-backed scrape by default for reliability
-        return self.scrape(query, limit)
+        return self._serp_scrape(query, limit)
 
-    def scrape(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
+    def _serp_scrape(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
         """Fetch results from SerpAPI Google Shopping and normalize them."""
         self.last_error = None
         SERPAPI_API_KEY = getattr(settings, 'SERPAPI_API_KEY', '') or os.getenv('SERPAPI_API_KEY', '')

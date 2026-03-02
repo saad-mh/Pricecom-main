@@ -2,7 +2,7 @@ from __future__ import annotations
 import os
 import logging
 from celery import shared_task
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 from core.services.query_cleaner import normalize_query
 from core.services.ScraperService import ScraperService
@@ -87,7 +87,7 @@ def search_and_scrape(self, query: str) -> Dict[str, Any]:
 
 
 @shared_task(bind=True)
-def image_search_task(self, temp_path: str, ocr_text: str | None = None) -> Dict[str, Any]:
+def image_search_task(self, temp_path: str, ocr_text: Optional[str] = None) -> Dict[str, Any]:
     """Proxy image search to universal search using OCR text as query."""
     query = ocr_text or os.path.basename(temp_path)
     return search_and_scrape.apply(args=[query]).get()
