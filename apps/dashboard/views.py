@@ -171,7 +171,7 @@ def _chart_payload(product_id: Optional[int] = None, limit: int = 20) -> Dict[st
         }
 
     base_qs = StorePrice.objects.select_related('product').prefetch_related(
-        Prefetch('history', queryset=PriceHistory.objects.order_by('-recorded_at')[:limit])
+        Prefetch('history', queryset=PriceHistory.objects.order_by('-recorded_at'))
     )
 
     if product_id:
@@ -190,7 +190,7 @@ def _chart_payload(product_id: Optional[int] = None, limit: int = 20) -> Dict[st
     store_price_map: Dict[str, Dict[str, float]] = {}
 
     for store_price in store_prices:
-        history_entries = list(store_price.history.all())
+        history_entries = list(store_price.history.all()[:limit])
         if not history_entries:
             continue
         entry_map: Dict[str, float] = {}
